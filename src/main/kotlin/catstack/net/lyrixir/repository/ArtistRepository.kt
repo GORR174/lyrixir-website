@@ -8,9 +8,9 @@ import io.ktor.client.request.*
 import kotlinx.coroutines.runBlocking
 
 class ArtistRepository(private val httpClient: HttpClient) {
-    fun getArtists(): GetArtistsResponseDto {
+    fun getArtists(page: Int, size: Int): GetArtistsResponseDto {
         return runBlocking {
-            val endpoint = "artist/artists"
+            val endpoint = "artist/artists?page=$page&size=$size"
             val resp: ResponseDto<GetArtistsResponseDto> = httpClient.get(endpoint).body()
 
             return@runBlocking resp.response

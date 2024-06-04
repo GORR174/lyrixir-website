@@ -9,6 +9,10 @@ fun HTML.artists(artistRepository: ArtistRepository) {
     head {
         title("Artists")
         script(src = "https://cdn.tailwindcss.com") {}
+        script(src = "https://unpkg.com/htmx.org@1.9.12") {
+            attributes["crossorigin"] = "anonymous"
+            attributes["integrity"] = "sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
+        }
     }
     body {
         div(classes = "grid gap-6 lg:gap-8 pb-12 lg:pb-24") {
@@ -17,9 +21,7 @@ fun HTML.artists(artistRepository: ArtistRepository) {
                 searchBar()
             }
             artistContainer {
-                artistRepository.getArtists().artists.forEach {
-                    artist(it.name, it.profileImage)
-                }
+                loadArtistsPage(0, artistRepository)
             }
         }
     }
@@ -33,18 +35,41 @@ private fun DIV.artistContainer(block: DIV.() -> Unit) {
     }
 }
 
-private fun DIV.artist(
+fun HtmlBlockTag.loadArtistsPage(page: Int, artistRepository: ArtistRepository) {
+    val artists = artistRepository.getArtists(page, 1).artists.apply {
+        forEach {
+            artist(it.name, it.profileImage)
+        }
+    }
+    if (artists.isNotEmpty()) {
+        loadNextPageBlock(page + 1)
+    }
+}
+
+fun HtmlBlockTag.artist(
     name: String,
     img: String? = "https://news.store.rambler.ru/img/72b877a200c444a64236e279f888bede?img-1-resize=width%3A1280%2Cheight%3A1280%2Cfit%3Acover&img-format=auto"
 ) {
     val img = img ?: "https://news.store.rambler.ru/img/72b877a200c444a64236e279f888bede?img-1-resize=width%3A1280%2Cheight%3A1280%2Cfit%3Acover&img-format=auto"
-    div(classes = "flex bg-gray-300 flex-col gap-2 group p-4 rounded hover:bg-gray-200") {
+    div(classes = "flex bg-gray-300 flex-col gap-2 group p-4 rounded hover:bg-gray-200 cursor-pointer") {
         img(
             src = img,
             alt = name, classes = "rounded-xl object-cover aspect-square max-w-[250px]"
         )
         div(classes = "flex flex-col gap-1") {
             h3(classes = "text-xl font-semibold") { +name }
+        }
+    }
+}
+
+fun HtmlBlockTag.loadNextPageBlock(nextPage: Int) {
+    div(classes = "flex bg-gray-300 flex-col gap-2 group p-4 rounded hover:bg-gray-200 cursor-pointer") {
+        attributes["hx-get"] = "/artistNextPage?page=$nextPage"
+        attributes["hx-trigger"] = "click"
+        attributes["hx-swap"] = "outerHTML"
+
+        div(classes = "flex flex-col gap-1") {
+            h3(classes = "text-xl font-semibold") { +"Load more" }
         }
     }
 }
