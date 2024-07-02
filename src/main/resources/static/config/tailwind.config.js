@@ -1,0 +1,4 @@
+tailwind.config = {
+    darkMode: 'selector',
+    // ...
+}
