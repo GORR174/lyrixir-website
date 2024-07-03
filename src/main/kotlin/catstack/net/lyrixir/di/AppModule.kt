@@ -1,6 +1,7 @@
 package catstack.net.lyrixir.di
 
 import catstack.net.lyrixir.repository.ArtistRepository
+import catstack.net.lyrixir.repository.SongRepository
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
@@ -22,4 +23,5 @@ val appModule = module {
     }
 
     singleOf(::ArtistRepository)
+    singleOf(::SongRepository)
 }

@@ -45,7 +45,7 @@ private fun DIV.artistContainer(block: DIV.() -> Unit) {
 }
 
 fun HtmlBlockTag.loadArtistsPage(page: Int, artistRepository: ArtistRepository) {
-    val artists = artistRepository.getArtists(page, 1).artists.apply {
+    val artists = artistRepository.getArtists(page, 2).artists.apply {
         forEach(::artist)
     }
     if (artists.isNotEmpty()) {

@@ -4,6 +4,7 @@ import catstack.net.lyrixir.pages.artists.artists
 import catstack.net.lyrixir.pages.artists.loadArtistsPage
 import catstack.net.lyrixir.pages.artists.songs
 import catstack.net.lyrixir.repository.ArtistRepository
+import catstack.net.lyrixir.repository.SongRepository
 import io.ktor.server.application.*
 import io.ktor.server.html.*
 import io.ktor.server.http.content.*
@@ -14,6 +15,7 @@ import java.io.File
 
 fun Application.configureRouting() {
     val artistRepository by inject<ArtistRepository>()
+    val songRepository by inject<SongRepository>()
 
     routing {
         staticResources("/", "static.config")
@@ -33,7 +35,7 @@ fun Application.configureRouting() {
         get("/artist{id}") {
             println(call.parameters["id"])
             call.respondHtml {
-                songs(call.parameters["id"]?.toLongOrNull() ?: -1)
+                songs(call.parameters["id"]?.toLongOrNull() ?: -1, artistRepository, songRepository)
             }
         }
     }
