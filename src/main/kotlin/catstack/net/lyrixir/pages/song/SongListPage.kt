@@ -1,9 +1,6 @@
 package catstack.net.lyrixir.pages.song
 
-import catstack.net.lyrixir.components.baseBody
-import catstack.net.lyrixir.components.basic
-import catstack.net.lyrixir.components.searchBar
-import catstack.net.lyrixir.components.title
+import catstack.net.lyrixir.components.*
 import catstack.net.lyrixir.domain.SongDto
 import catstack.net.lyrixir.repository.ArtistRepository
 import catstack.net.lyrixir.repository.SongRepository
@@ -16,26 +13,19 @@ fun HTML.songs(artistId: Long, artistRepository: ArtistRepository, songRepositor
         basic(artist.name)
     }
 
-    baseBody {
-        div(classes = "h-screen bg-white dark:bg-gray-800") {
-            div(classes = "grid gap-6 lg:gap-8 pb-12 lg:pb-24") {
-                div(classes = "mx-auto max-w-6xl grid items-center justify-center gap-4 px-4 lg:gap-10") {
-                    title(artist.name)
-                    searchBar("Song name")
-                }
-                songContainer {
-                    div(classes = "w-6/12 min-w-96 relative overflow-x-auto shadow-md sm:rounded-lg") {
-                        table(classes = "w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400") {
-                            thead(classes = "text-xs text-gray-700 uppercase bg-gray-50 dark:bg-sky-950 dark:text-gray-400") {
-                                tr {
-                                    th(scope = ThScope.col, classes = "px-6 py-3") { +"song name" }
-                                }
-                            }
-                            tbody {
-                                songRepository.getAllSongs(artistId).forEach {
-                                    song(it)
-                                }
-                            }
+    baseBodyContainer {
+        titleWithSearchBar(artist.name, "Song name")
+        songContainer {
+            div(classes = "w-6/12 min-w-96 relative overflow-x-auto shadow-md sm:rounded-lg") {
+                table(classes = "w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400") {
+                    thead(classes = "text-xs text-gray-700 uppercase bg-gray-50 dark:bg-sky-950 dark:text-gray-400") {
+                        tr {
+                            th(scope = ThScope.col, classes = "px-6 py-3") { +"song name" }
+                        }
+                    }
+                    tbody {
+                        songRepository.getAllSongs(artistId).forEach {
+                            song(it)
                         }
                     }
                 }

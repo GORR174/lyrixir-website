@@ -27,6 +27,25 @@ fun HtmlBlockTag.scripts() {
     }
 }
 
+@HtmlTagMarker fun HTML.baseBodyContainer(block: DIV.() -> Unit) {
+    body {
+        baseContainer {
+            div(classes = "grid gap-6 lg:gap-8 pb-12 lg:pb-24") {
+                block(this)
+            }
+        }
+
+        scripts()
+    }
+}
+
+
+@HtmlTagMarker fun BODY.baseContainer(block: DIV.() -> Unit) {
+    div(classes = "h-screen bg-white dark:bg-gray-800") {
+        block(this)
+    }
+}
+
 suspend fun ApplicationCall.respondDarkHtml(block: HTML.() -> Unit) {
     respondHtml {
         classes = setOf("dark")

@@ -11,3 +11,16 @@ fun DIV.title(title: String) {
         }
     }
 }
+
+fun DIV.titleContainer(block: DIV.() -> Unit) {
+    div(classes = "mx-auto max-w-6xl grid items-center justify-center gap-4 px-4 pt-4 lg:gap-10") {
+        block()
+    }
+}
+
+fun DIV.titleWithSearchBar(title: String, placeholderText: String) {
+    titleContainer {
+        title(title)
+        searchBar(placeholderText)
+    }
+}

@@ -4,24 +4,16 @@ import catstack.net.lyrixir.components.*
 import catstack.net.lyrixir.domain.ArtistDto
 import catstack.net.lyrixir.repository.ArtistRepository
 import kotlinx.html.*
-import kotlin.collections.forEach
 import kotlin.collections.set
 
 fun HTML.artists(artistRepository: ArtistRepository) {
     head {
         basic("Artists")
     }
-    baseBody {
-        div(classes = "h-screen bg-white dark:bg-gray-800") {
-            div(classes = "grid gap-6 lg:gap-8 pb-12 lg:pb-24") {
-                div(classes = "mx-auto max-w-6xl grid items-center justify-center gap-4 px-4 lg:gap-10") {
-                    title("Artists")
-                    searchBar("Artist name")
-                }
-                artistContainer {
-                    loadArtistsPage(0, artistRepository)
-                }
-            }
+    baseBodyContainer {
+        titleWithSearchBar("Artists", "Artist name")
+        artistContainer {
+            loadArtistsPage(0, artistRepository)
         }
     }
 }
@@ -35,9 +27,7 @@ private fun DIV.artistContainer(block: DIV.() -> Unit) {
 }
 
 fun HtmlBlockTag.loadArtistsPage(page: Int, artistRepository: ArtistRepository) {
-    val artists = artistRepository.getArtists(page, 2).artists.apply {
-        forEach(::artist)
-    }
+    val artists = artistRepository.getArtists(page, 2).artists.onEach(::artist)
     if (artists.isNotEmpty()) {
         loadNextPageBlock(page + 1)
     }
