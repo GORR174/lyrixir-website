@@ -1,7 +1,5 @@
 package catstack.net.lyrixir.repository
 
-import catstack.net.lyrixir.domain.ArtistDto
-import catstack.net.lyrixir.domain.GetArtistsResponseDto
 import catstack.net.lyrixir.domain.ResponseDto
 import catstack.net.lyrixir.domain.SongDto
 import io.ktor.client.*

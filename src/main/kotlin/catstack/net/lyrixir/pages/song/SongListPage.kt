@@ -1,5 +1,7 @@
-package catstack.net.lyrixir.pages.artists
+package catstack.net.lyrixir.pages.song
 
+import catstack.net.lyrixir.components.baseBody
+import catstack.net.lyrixir.components.basic
 import catstack.net.lyrixir.components.searchBar
 import catstack.net.lyrixir.components.title
 import catstack.net.lyrixir.domain.SongDto
@@ -10,19 +12,11 @@ import kotlinx.html.*
 fun HTML.songs(artistId: Long, artistRepository: ArtistRepository, songRepository: SongRepository) {
     val artist = artistRepository.getArtist(artistId)
 
-    classes = setOf("dark")
     head {
-        title("Artists")
-        script(src = "https://cdn.tailwindcss.com") {}
-        script(src = "https://unpkg.com/htmx.org@1.9.12") {
-            attributes["crossorigin"] = "anonymous"
-            attributes["integrity"] = "sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
-        }
-        link(href = "https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css", rel = "stylesheet") {  }
-        script(src = "https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js") {}
-        script(src = "/tailwind.config.js") {  }
+        basic(artist.name)
     }
-    body {
+
+    baseBody {
         div(classes = "h-screen bg-white dark:bg-gray-800") {
             div(classes = "grid gap-6 lg:gap-8 pb-12 lg:pb-24") {
                 div(classes = "mx-auto max-w-6xl grid items-center justify-center gap-4 px-4 lg:gap-10") {

@@ -38,10 +38,3 @@ fun DIV.searchBar(placeholderText: String) {
         }
     }
 }
-
-class Path(consumer: TagConsumer<*>) : HTMLTag("path", consumer, mapOf(), null, true, false), HtmlInlineTag
-
-fun FlowOrPhrasingContent.path(block: Path.() -> Unit = {}) {
-    Path(consumer).visit(block)
-}
-
