@@ -35,7 +35,7 @@ fun HtmlBlockTag.loadArtistsPage(page: Int, artistRepository: ArtistRepository) 
 
 fun HtmlBlockTag.artist(artist: ArtistDto) {
     val img = artist.profileImage ?: "https://news.store.rambler.ru/img/72b877a200c444a64236e279f888bede?img-1-resize=width%3A1280%2Cheight%3A1280%2Cfit%3Acover&img-format=auto"
-    div(classes = "flex bg-gray-300 flex-col gap-2 group p-4 rounded hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-700 cursor-pointer") {
+    div(classes = "flex bg-gray-300 flex-col gap-2 group p-4 rounded hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-slate-700 cursor-pointer") {
         onClick = "location.href = 'artist${artist.id}';"
         img(
             src = img,

@@ -17,6 +17,7 @@ fun HtmlBlockTag.scripts() {
     }
     script(src = "https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js") {}
     script(src = "/tailwind.config.js") {  }
+    script(src = "/lightSwitch.js") {  }
 }
 
 @HtmlTagMarker fun HTML.baseBody(block: BODY.() -> Unit) {
@@ -29,8 +30,9 @@ fun HtmlBlockTag.scripts() {
 
 @HtmlTagMarker fun HTML.baseBodyContainer(block: DIV.() -> Unit) {
     body {
+        navBar()
         baseContainer {
-            div(classes = "grid gap-6 lg:gap-8 pb-12 lg:pb-24") {
+            div(classes = "mt-[69px] grid gap-6 lg:gap-8 pb-12 lg:pb-24") {
                 block(this)
             }
         }
@@ -41,7 +43,7 @@ fun HtmlBlockTag.scripts() {
 
 
 @HtmlTagMarker fun BODY.baseContainer(block: DIV.() -> Unit) {
-    div(classes = "h-screen bg-white dark:bg-gray-800") {
+    div(classes = "min-h-screen h-max bg-white dark:bg-gray-800") {
         block(this)
     }
 }

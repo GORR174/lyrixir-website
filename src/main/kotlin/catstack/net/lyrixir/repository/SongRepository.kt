@@ -16,4 +16,13 @@ class SongRepository(private val httpClient: HttpClient) {
             return@runBlocking resp.response
         }
     }
+
+    fun getById(id: Long): SongDto {
+        return runBlocking {
+            val endpoint = "song/getById?id=$id"
+            val resp: ResponseDto<SongDto> = httpClient.get(endpoint).body()
+
+            return@runBlocking resp.response
+        }
+    }
 }

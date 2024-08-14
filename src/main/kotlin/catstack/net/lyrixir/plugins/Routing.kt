@@ -3,6 +3,7 @@ package catstack.net.lyrixir.plugins
 import catstack.net.lyrixir.components.respondDarkHtml
 import catstack.net.lyrixir.pages.artists.artists
 import catstack.net.lyrixir.pages.artists.loadArtistsPage
+import catstack.net.lyrixir.pages.song.song
 import catstack.net.lyrixir.pages.song.songs
 import catstack.net.lyrixir.repository.ArtistRepository
 import catstack.net.lyrixir.repository.SongRepository
@@ -34,6 +35,12 @@ fun Application.configureRouting() {
             println(call.parameters["id"])
             call.respondDarkHtml {
                 songs(call.parameters["id"]?.toLongOrNull() ?: -1, artistRepository, songRepository)
+            }
+        }
+        get("/song{id}") {
+            println(call.parameters["id"])
+            call.respondDarkHtml {
+                song(call.parameters["id"]?.toLongOrNull() ?: -1, artistRepository, songRepository)
             }
         }
     }
